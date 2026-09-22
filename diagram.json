@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "author": "TS RMU Project",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": { "flashSize": "16" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_selftest",
+      "top": -80,
+      "left": 30,
+      "attrs": { "color": "green", "label": "Self-Test" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_instantoff",
+      "top": -80,
+      "left": 130,
+      "attrs": { "color": "red", "label": "Instant-Off" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_relay",
+      "top": 20,
+      "left": 130,
+      "attrs": { "color": "red", "label": "Relay ON" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_relay_led",
+      "top": 70,
+      "left": 130,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-ili9341",
+      "id": "tft",
+      "top": -260,
+      "left": -200,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "chip-ads1219",
+      "id": "ads",
+      "top": 160,
+      "left": -300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_pipe",
+      "top": 40,
+      "left": -260,
+      "attrs": { "label": "Pipe MV (AIN0)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_pipe",
+      "top": 120,             
+      "left": -320,            
+      "attrs": { "text": "陰極保護設施 (接AIN0)" }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_coupon",
+      "top": 40,
+      "left": -120,
+      "attrs": { "label": "Coupon mA (AIN1)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_coupon",
+      "top": 120,             
+      "left": -120,            
+      "attrs": { "text": "試片 (接AIN1)" }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_bat",
+      "top": 200,
+      "left": -120,
+      "attrs": { "label": "Bat Volt (AIN2)" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "lbl_bat",
+      "top": 280,             
+      "left": -120,            
+      "attrs": { "text": "電池電壓 (接AIN2)" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "btn_selftest:1.l", "esp:1", "green", [] ],
+    [ "btn_selftest:2.l", "esp:GND.2", "black", [] ],
+
+    [ "btn_instantoff:1.l", "esp:2", "red", [] ],
+    [ "btn_instantoff:2.l", "esp:GND.2", "black", [] ],
+
+    [ "esp:7", "led_relay:A", "red", [] ],
+    [ "led_relay:K", "r_relay_led:1", "black", [] ],
+    [ "r_relay_led:2", "esp:GND.2", "black", [] ],
+
+    [ "tft:VCC", "esp:3V3.1", "red", [] ],
+    [ "tft:GND", "esp:GND.1", "black", [] ],
+    [ "tft:CS", "esp:10", "orange", [] ],
+    [ "tft:RST", "esp:14", "purple", [] ],
+    [ "tft:D/C", "esp:9", "gray", [] ],
+    [ "tft:MOSI", "esp:11", "blue", [] ],
+    [ "tft:SCK", "esp:12", "yellow", [] ],
+    [ "tft:LED", "esp:3V3.1", "red", [] ],
+    [ "tft:MISO", "esp:13", "white", [] ],
+
+    [ "ads:VDD", "esp:3V3.1", "red", [] ],
+    [ "ads:GND", "esp:GND.1", "black", [] ],
+    [ "ads:SDA", "esp:4", "blue", [] ],
+    [ "ads:SCL", "esp:5", "yellow", [] ],
+
+    [ "pot_pipe:VCC", "esp:3V3.1", "red", [] ],
+    [ "pot_pipe:GND", "esp:GND.1", "black", [] ],
+    [ "pot_pipe:SIG", "ads:AIN0", "green", [] ],
+
+    [ "pot_coupon:VCC", "esp:3V3.1", "red", [] ],
+    [ "pot_coupon:GND", "esp:GND.1", "black", [] ],
+    [ "pot_coupon:SIG", "ads:AIN1", "cyan", [] ],
+
+    [ "pot_bat:VCC", "esp:3V3.1", "red", [] ],
+    [ "pot_bat:GND", "esp:GND.1", "black", [] ],
+    [ "pot_bat:SIG", "ads:AIN2", "orange", [] ]
+  ],
+  "dependencies": {}
+}

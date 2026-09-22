@@ -1,0 +1,14 @@
+{
+  "name": "ads1219",
+  "author": "TS RMU Project",
+  "pins": [
+    "GND",
+    "VDD",
+    "SDA",
+    "SCL",
+    "AIN0",
+    "AIN1",
+    "AIN2",
+    "AIN3"
+  ]
+}
